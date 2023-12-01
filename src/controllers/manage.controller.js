@@ -6,7 +6,6 @@ const { AdminModel } = require('../models/admin.model');
 
 
 
-
 const generateAccessToken = async (user) => {
     try {
         const key = process.env.ACCESS_ADMIN_SECRET;
