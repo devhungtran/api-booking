@@ -27,19 +27,19 @@ const userRoutes  = express.Router()
  *   description: API của người dùng
  */
 
-
 /**
  * @swagger
- * /auth/signin:
+ * /user/signin:
  *   post:
  *     summary: Đăng nhập tài khoản, nếu tài khoản chưa có thì nó auto tạo
  *     tags: [users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/user'
+ *     parameters:
+ *       - in: header
+ *         name: access_token
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The access token for authentication
  *     responses:
  *       200:
  *         description: The user was successfully created
@@ -50,7 +50,6 @@ const userRoutes  = express.Router()
  *       500:
  *         description: Some server error
  */
-
 
 
 userRoutes.post('/signin', SignInWidthZalo)

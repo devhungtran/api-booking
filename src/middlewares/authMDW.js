@@ -8,7 +8,8 @@ const { UserModel } = require('../models/user.model');
 
 const authMDW = async (req,res,next) =>{
     try {
-        let authorization = req.headers['authorization']
+        let authorization = req.headers['authorized']
+
 
         if(!authorization){
             res.status(500).json({
@@ -17,12 +18,12 @@ const authMDW = async (req,res,next) =>{
             })
             return
         }
-        const token = authorization.substring(7)
 
-        const data = jwt.verify(authToken, config().parsed.JWT_SECRET);
-        
+        const data = await jwt.verify(authorization, config().parsed.JWT_SECRET);
+
+        console.log(data);
         const user = await UserModel.findOne({
-            id: data.id
+            zaloID: data.zaloId
         });
 
         if(!user){
@@ -32,7 +33,6 @@ const authMDW = async (req,res,next) =>{
             })
             return
         }
-
         req.user = user
         return next()
 

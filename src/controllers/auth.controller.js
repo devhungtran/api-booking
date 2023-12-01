@@ -1,65 +1,82 @@
 const { config } = require("dotenv");
 const { UserModel } = require("../models/user.model");
 const { getZaloProfile } = require("../services/zalo.service");
+const jwt = require('jsonwebtoken')
 
 
 
-
-const generateAccessToken =  async(user) =>{
+const generateAccessToken = async (data) => {
     try {
-        
-        const token = await jwt.sign({
-            zaloID : zaloId,
-        }, config().parsed.JWT_SECRET)
-        return token
+      const token = await jwt.sign(
+        { zaloID: data.id },
+        process.env.JWT_SECRET
+      );
+      console.log(token);
+      return token;
     } catch (error) {
-        
+      console.error('Error generating token:', error);
+      throw error; // Rethrow the error to propagate it to the calling function.
     }
-}
-
-
-
+  };
 
 const SignInWidthZalo =  async(req,res) =>{
     try {
-        const accessToken = req.body.accessToken;
+        const accessToken = req.headers.access_token;
+
+        if(!accessToken){
+            res.status(500).json({
+                stauts: false,
+                message: "No Token",
         
-        const { id, birthday, name, gender, picture } = await getZaloProfile()
-        const avatar = picture
-        if (picture.data) {
-			avatar = picture.data.url
-		}
-        let birthDate = null
-		if (birthday) {
-			const parts = birthday.split('/')
-			birthDate = new Date(parts[2], parts[1] - 1, parts[0])
-		}
+            })
+            return
+        }
+  
+
+        const data = await getZaloProfile(accessToken)
+        if(data.message != "Success"){
+            res.status(500).json({
+                stauts: false,
+                message: "Token sai",
+        
+            })
+            return
+        }
+        const jwToken =  await generateAccessToken(data);
+    
+
+        const createUser = await UserModel.updateOne(
+            { zaloId: data.id },  // The filter criteria to find the document to update
+            {
+              birthday: "",
+              name: data.name,
+              gender: "",
+              avatar: ""
+            },  // The data to update or set in the document
+            { upsert: true }  // An option to perform an upsert (insert if not exists) operation
+          );
 
 
-        let user = await UserModel.updateOne({ zaloId: id }, {
-			birthday: birthDate,
-			name,
-			gender,
-			avatar: avatar
-		}, { upsert: true });
-        if(!user){
+        if(!createUser){
             res.status(500).json({
                 stauts: false,
                 message: "Server err",
             })
         }
 
-        generateAccessToken(user)   
+    
+
         res.status(200).json({
             stauts: true,
             message: "Login Sucess",
-            data: user,
-            token: jwt
+            data: data,
+            jwt: jwToken
         })
 
 
         
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             stauts: false,
             message: "Server err",

@@ -14,14 +14,21 @@ const port = process.env.PORT
 
 const app = express()
 app.use(bodyParser.json());
-app.use(cors())
+app.use(express.json()); // Use express.json() for parsing JSON bodies
+app.use(cors());
+
+
+
+
+
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 // connect to database mongodb
 db.connectDb()
 // manage router
 app.use('/', routes);
-
 
 
 

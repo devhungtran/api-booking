@@ -14,22 +14,21 @@ const getZaloProfile = async (accessToken) =>{
    
 
         const fields = 'id,name,picture';
-        const data = await axiosReq.get('/me?fields=${fields}',{
+        const data = await axiosReq.get(`${API_DOMAIN}/v2.0/me?${fields}`,{
             headers: {
                 'Content-Type': 'application/json',
                 'access_token': accessToken
             },
         })
 
-        console.log(data);
-
-        return(data)
+     
+        return(data.data)
 
     } catch (error) {
         
     }   
 }
-
+``
 
 
 module.exports = {

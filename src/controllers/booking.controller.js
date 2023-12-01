@@ -1,4 +1,5 @@
 const { bookingModel } = require("../models/booking.model")
+const { branchModel } = require("../models/branch.model")
 const { ServiceModel } = require("../models/service.model")
 const { UserModel } = require("../models/user.model")
 
@@ -230,15 +231,18 @@ const createBooking =  async(req,res) =>{
 
        
 
-        const checkBranch = await ServiceModel.findOne({
+        const checkBranch = await branchModel.findOne({
             branch_code: branch_code
         })  
+
+
+        
 
 
         if(!checkBranch){
             res.status(500).json({
                 status: false,
-                message: "Chii nhánh không hợp lệ",
+                message: "Chi nhánh không hợp lệ",
             })
             return
         }
@@ -258,28 +262,7 @@ const createBooking =  async(req,res) =>{
             return
         }
 
-
-
-
-        const booking_user = req.user.id || "dev"
-
-
-        const checkUser = await UserModel.findOne({
-            zaloID: booking_user
-        })
-        if(!checkUser){
-            res.status(500).json({
-                status: false,
-                message: "Người dùng không hợp lệ",
-            })
-            return
-        }
-
-
-
-
-
-
+        const booking_user  = req.user.zaloID
        
         const book =  await bookingModel.create({
             booking_user: booking_user,
