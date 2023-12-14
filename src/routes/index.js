@@ -10,6 +10,8 @@ const { branchRoutes } = require('./branch.routes');
 const { settingRoutes } = require('./setting.routes');
 const { manageRoutes } = require('./manage.routes');
 const { userRoutes } = require('./user.routes');
+const { voucherRoutes } = require('./voucher.routes');
+const { notifi } = require('./notificatiion.routes');
 
 const routes  = express.Router()
 
@@ -52,12 +54,13 @@ const optionSwaggerUI = {
 
 
   routes.use('/service', serviceRoutes) // ok
-  routes.use('/product', productRoutes)
+  routes.use('/product', productRoutes)//okk
   routes.use('/branch', branchRoutes)
   routes.use('/booking', bookingRoutes)
   routes.use('/setting', settingRoutes) // ok'
   routes.use('/user', userRoutes) // ok
-
+  routes.use('/voucher', voucherRoutes)
+  routes.use('/notification', notifi)
   routes.use('/manage', manageRoutes) // ok
 
 

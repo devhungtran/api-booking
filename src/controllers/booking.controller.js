@@ -217,19 +217,6 @@ const createBooking =  async(req,res) =>{
             return
         }
 
-        const checkService = await ServiceModel.findOne({
-            code_service: code_service
-        })  
-    
-        if(!checkService){
-            res.status(500).json({
-                status: false,
-                message: "Dịch vụ không tồn tại",
-            })
-            return
-        }
-
-       
 
         const checkBranch = await branchModel.findOne({
             branch_code: branch_code

@@ -17,9 +17,9 @@ const BookingSchema  = new Schema({
         require: true
     },
     code_service: {
-        type: String,
-        require: true
+        type: Array
     },
+    
     booking_time: {
         type: Date,
         require: true

@@ -5,11 +5,9 @@ const { UserModel } = require('../models/user.model');
 
 
 
-
 const authMDW = async (req,res,next) =>{
     try {
         let authorization = req.headers['authorized']
-
 
         if(!authorization){
             res.status(500).json({
@@ -19,7 +17,7 @@ const authMDW = async (req,res,next) =>{
             return
         }
 
-        const data = await jwt.verify(authorization, config().parsed.JWT_SECRET);
+        const data =  jwt.verify(authorization, config().parsed.JWT_SECRET);
 
         console.log(data);
         const user = await UserModel.findOne({
@@ -39,7 +37,7 @@ const authMDW = async (req,res,next) =>{
     } catch (error) {
         res.status(500).json({
             status: false,
-            message: "Server lỗi"
+            message: "Tài khoản không tồn tại"
         })
         return
     }
