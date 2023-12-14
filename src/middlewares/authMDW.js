@@ -21,8 +21,10 @@ const authMDW = async (req,res,next) =>{
 
 
         const user = await UserModel.findOne({
-            zaloID: data.zaloId
+            zaloID: data.zaloID
         });
+    
+        
 
         if(!user){
             res.status(500).json({
