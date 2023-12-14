@@ -6,15 +6,15 @@ const Schema = mongoose.Schema
 const BookingSchema  = new Schema({
     booking_code: {
         type: String,
-        required: true
+        require: true
     },
     booking_user: {
         type: String,
-        required: true
+        require: true
     },
     branch_code: {
         type: String,
-        required: true
+        require: true
     },
     code_service: {
         type: Array
@@ -22,7 +22,7 @@ const BookingSchema  = new Schema({
     
     booking_time: {
         type: Date,
-        required: true
+        require: true
     },
     booking_status:{
         type: String,

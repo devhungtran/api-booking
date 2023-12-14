@@ -180,6 +180,7 @@ const findBookingByStatus =  async(req,res) =>{
         
         const booking_status = req.params.booking_status || req.body.booking_status 
 
+        
 
         if(!booking_status){
             res.status(500).json({
@@ -229,7 +230,9 @@ const createBooking =  async(req,res) =>{
     try {
         
         const {code_service,branch_code,booking_time } =  req.body
-        const booking_status = "waiting"
+        
+        const booking_user = req.user.zaloID
+
         const booking_code = generateCodeBooking()
 
         if(!code_service){
@@ -290,11 +293,10 @@ const createBooking =  async(req,res) =>{
 
        
         const book =  await bookingModel.create({
-            booking_user:  req.user.zaloID,
+            booking_user: booking_user,
             booking_code: booking_code,
             code_service: code_service,
             booking_time: booking_time,
-            booking_status: booking_status
         })
   
         if(!book){ 
