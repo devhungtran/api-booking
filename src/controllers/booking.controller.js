@@ -303,7 +303,7 @@ const createBooking =  async(req,res) =>{
 
        
         const book =  await bookingModel.create({
-            booking_user: zaloID,
+            booking_user: zaloId,
             booking_code: booking_code,
             code_service: code_service,
             booking_time: booking_time,
