@@ -230,7 +230,7 @@ const createBooking =  async(req,res) =>{
     try {
         
         const {code_service,branch_code,booking_time } =  req.body
-        const { zaloID } = req.user;
+        const zaloId = req.user.zaloId;
 
         if (!zaloID) {
             res.status(500).json({
