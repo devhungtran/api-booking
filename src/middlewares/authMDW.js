@@ -34,6 +34,7 @@ const authMDW = async (req,res,next) =>{
             return
         }
         req.user = user
+        req.zaloID = data.zaloID
         return next()
 
     } catch (error) {
