@@ -230,8 +230,7 @@ const createBooking =  async(req,res) =>{
     try {
         
         const {code_service,branch_code,booking_time } =  req.body
-        console.log(req.user);
-        const booking_user = req.user.zaloID
+        const booking_user = req.user.zaloID | "19082003"
 
         const booking_code = generateCodeBooking()
 
