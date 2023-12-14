@@ -230,18 +230,15 @@ const createBooking =  async(req,res) =>{
     try {
         
         const {code_service,branch_code,booking_time } =  req.body
-        const zaloId = req.user.zaloId;
+        
+        const zaloID = req.user.zaloID;
 
-        if (!zaloId) {
+        if (!zaloID) {
             res.status(500).json({
                 status: false,
                 message: "Không tìm thấy thông tin người dùng",
             });
             return;
-        }
-        
-        if(!booking_user){
-
         }
         const booking_code = generateCodeBooking()
 
@@ -302,7 +299,7 @@ const createBooking =  async(req,res) =>{
 
        
         const book =  await bookingModel.create({
-            booking_user: zaloId,
+            booking_user: zaloID,
             booking_code: booking_code,
             code_service: code_service,
             booking_time: booking_time,
