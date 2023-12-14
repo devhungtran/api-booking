@@ -51,6 +51,7 @@ const bookingRoutes  = express.Router()
  *   description: API của đặt lịch
  */
 
+
 /**
  * @swagger
  * /booking/get:
@@ -75,7 +76,7 @@ const bookingRoutes  = express.Router()
  *       500:
  *         description: Some error happened
  */
-bookingRoutes.get('/get', checkAdmin ,getAllBooking)
+bookingRoutes.get('/get' ,getAllBooking)
 
 /**
  * @swagger
@@ -107,7 +108,33 @@ bookingRoutes.get('/get/:booking_code', findBookingByCode)
 
 
 
+/**
+ * @swagger
+ * /booking/get/{userID}:
+ *  get:
+ *    summary: Tìm lịch theo mã
+ *    tags: [bookings]
+ *    parameters:
+ *      - in: path
+ *        name: userID
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Mã lịch
+ *    responses:
+ *      200:
+ *        description: The service was updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/booking'
+ *      404:
+ *        description: The service was not found
+ *      500:
+ *        description: Some error happened  
+ */
 
+bookingRoutes.get('/get/:userID', findBookingByCode)
 
 
 

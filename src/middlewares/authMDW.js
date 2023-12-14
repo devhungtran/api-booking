@@ -19,7 +19,7 @@ const authMDW = async (req,res,next) =>{
 
         const data =  jwt.verify(authorization, config().parsed.JWT_SECRET);
 
-        console.log(data);
+
         const user = await UserModel.findOne({
             zaloID: data.zaloId
         });

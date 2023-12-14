@@ -137,6 +137,44 @@ const findBookingByCode = async(req,res) =>{
 
 
 
+
+
+const findBookingByUser = async(req,res) =>{
+    try {
+        const zaloID = req.user.zaloID
+        
+
+
+        
+        const data = await bookingModel.findOne({
+            zaloID: zaloID
+        })
+
+        if(!data){
+            res.status(500).json({
+                status: false,
+                message: "get all booking failed !!!",
+            })
+            return
+        }
+       
+        return res.status(200).json({
+            status: true,
+            message: `get booking by  booking code ${booking_code} successfully`,
+            data: data
+        })
+
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "get all booking failed !!!",
+        })
+    }
+}
+
+
+
 const findBookingByStatus =  async(req,res) =>{
     try {
         
@@ -249,10 +287,10 @@ const createBooking =  async(req,res) =>{
             return
         }
 
-        const booking_user  = req.user.zaloID
+
        
         const book =  await bookingModel.create({
-            booking_user: booking_user,
+            booking_user:  req.user.zaloID,
             booking_code: booking_code,
             code_service: code_service,
             booking_time: booking_time,
@@ -300,5 +338,6 @@ module.exports = {
     cancelBooking,
     findBookingByStatus,
     findBookingByCode,
-    createBooking
+    createBooking,
+    findBookingByUser
 }
