@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { getAllBooking, cancelBooking, findBookingByStatus, findBookingByCode, createBooking } = require('../controllers/booking.controller')
+const { getAllBooking, cancelBooking, findBookingByCode, createBooking, HistortBookingUser } = require('../controllers/booking.controller')
 const { findServiceByCode } = require('../controllers/service.controller')
 const { authMDW } = require('../middlewares/authMDW')
 const { checkAdmin } = require('../middlewares/admin.mdw')
@@ -108,34 +108,7 @@ bookingRoutes.get('/get/:booking_code', findBookingByCode)
 
 
 
-/**
- * @swagger
- * /booking/get/{userID}:
- *  get:
- *    summary: Tìm lịch theo mã
- *    tags: [bookings]
- *    parameters:
- *      - in: path
- *        name: userID
- *        schema:
- *          type: string
- *        required: true
- *        description: Mã lịch
- *    responses:
- *      200:
- *        description: The service was updated
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/booking'
- *      404:
- *        description: The service was not found
- *      500:
- *        description: Some error happened  
- */
-
-bookingRoutes.get('/get/:userID', findBookingByCode)
-
+bookingRoutes.get('/user/:id', HistortBookingUser)
 
 
 /**

@@ -21,13 +21,13 @@ const generateCodeBooking = () =>{
 
 const getAllBooking =  async(req,res) =>{
     try {
-        const data = await bookingModel.find({})
 
+        const data = await bookingModel.find({})
 
         if(!data){
             res.status(500).json({
                 status: false,
-                message: "get all booking failed !!!",
+                message: "failed!!!",
             })
             return
         }
@@ -41,7 +41,7 @@ const getAllBooking =  async(req,res) =>{
     } catch (error) {
         res.status(500).json({
             status: false,
-            message: "get all booking failed !!!",
+            message: "get all booking failsed !!!",
         })
     }
 }
@@ -115,7 +115,7 @@ const findBookingByCode = async(req,res) =>{
         if(!data){
             res.status(500).json({
                 status: false,
-                message: "get all booking failed !!!",
+                message: "failed!!!",
             })
             return
         }
@@ -130,48 +130,12 @@ const findBookingByCode = async(req,res) =>{
     } catch (error) {
         res.status(500).json({
             status: false,
-            message: "get all booking failed !!!",
+            message: "failed!!!",
         })
     }
 }
 
 
-
-
-
-const findBookingByUser = async(req,res) =>{
-    try {
-        const zaloID = req.user.zaloID
-        
-
-
-        
-        const data = await bookingModel.findOne({
-            zaloID: zaloID
-        })
-
-        if(!data){
-            res.status(500).json({
-                status: false,
-                message: "get all booking failed !!!",
-            })
-            return
-        }
-       
-        return res.status(200).json({
-            status: true,
-            message: `get booking by  booking code ${booking_code} successfully`,
-            data: data
-        })
-
-
-    } catch (error) {
-        res.status(500).json({
-            status: false,
-            message: "get all booking failed !!!",
-        })
-    }
-}
 
 
 
@@ -219,10 +183,11 @@ const findBookingByStatus =  async(req,res) =>{
     } catch (error) {
         res.status(500).json({
             status: false,
-            message: "get all booking failed !!!",
+            message: "failed!!!",
         })
     }
 }
+
 
 
 
@@ -287,7 +252,6 @@ const createBooking =  async(req,res) =>{
             return !isNaN(dateTime.getTime());
     }
 
-
         const checkDate = isDate(booking_time)
         if(!checkDate){
             res.status(500).json({
@@ -331,7 +295,29 @@ const createBooking =  async(req,res) =>{
     }
 }
 
+    
 
+
+
+const HistortBookingUser = async (req, res) => {
+    try {
+        const zaloID = req.zaloID
+
+        const data = await bookingModel.find({
+            booking_user: zaloID
+        })
+        res.status(200).json({
+            status: true,
+            data:data
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: "Server error: " + error.message,
+        });
+    }
+};
 
 
 
@@ -347,5 +333,5 @@ module.exports = {
     findBookingByStatus,
     findBookingByCode,
     createBooking,
-    findBookingByUser
+    HistortBookingUser
 }
