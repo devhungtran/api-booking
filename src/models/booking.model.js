@@ -16,6 +16,10 @@ const BookingSchema  = new Schema({
         type: String,
         require: true
     },
+    branch: {
+        type: String,
+        require: true
+    },
     code_service: {
         type: Array
     },
