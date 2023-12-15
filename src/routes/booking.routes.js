@@ -108,7 +108,7 @@ bookingRoutes.get('/get/:booking_code', findBookingByCode)
 
 
 
-bookingRoutes.get('/user/:id', HistortBookingUser)
+bookingRoutes.get('/user/:id',authMDW, HistortBookingUser)
 
 
 /**

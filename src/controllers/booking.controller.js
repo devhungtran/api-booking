@@ -295,8 +295,6 @@ const createBooking =  async(req,res) =>{
     }
 }
 
-    
-
 
 
 const HistortBookingUser = async (req, res) => {
