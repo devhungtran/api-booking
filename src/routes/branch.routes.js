@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { getAllBranch, createBranch, deleteBranch } = require('../controllers/branch.controller')
+const { getAllBranch, createBranch, deleteBranch, getBranchByCode } = require('../controllers/branch.controller')
 
 const branchRoutes  = express.Router()
 
@@ -96,7 +96,27 @@ branchRoutes.post('/create', createBranch);
 
 
 
-
+/**
+ * @swagger
+ * /branch/get/{branch_Code}:
+ *   get:
+ *     summary: Xóa chi nhánh theo mã
+ *     tags: [branchs]
+ *     parameters:
+ *       - in: path
+ *         name: branch_Code
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Mã dịch vụ
+ * 
+ *     responses:
+ *       200:
+ *         description: The service was deleted
+ *       404:
+ *         description: The service was not found
+ */
+branchRoutes.delete('get/:branch_code', getBranchByCode)
 
 
 /**

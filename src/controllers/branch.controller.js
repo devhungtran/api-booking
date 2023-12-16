@@ -9,7 +9,6 @@ const { branchModel } = require("../models/branch.model")
 
 
 
-
 // get all chi nhánh
 const getAllBranch = async (req,res) =>{
     try {
@@ -18,6 +17,27 @@ const getAllBranch = async (req,res) =>{
         res.status(200).json({
             status: true,
             message: "get all branch success !!!",
+            data: data
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+// get all chi nhánh
+const getBranchByCode = async (req,res) =>{
+    try {
+        
+        const branch_code = req.body || req.parmas
+        const data = await branchModel.find({
+            branch_code: branch_code
+        })
+        res.status(200).json({
+            status: true,
+            message: "get  branch success !!!",
             data: data
         })
     } catch (error) {
@@ -120,6 +140,6 @@ const deleteBranch    = async (req,res) =>{
 
 
 module.exports = {
-    getAllBranch,createBranch,deleteBranch
+    getAllBranch,createBranch,deleteBranch,getBranchByCode
 
 }

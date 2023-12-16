@@ -2,6 +2,7 @@ const { bookingModel } = require("../models/booking.model")
 const { branchModel } = require("../models/branch.model")
 const { ServiceModel } = require("../models/service.model")
 const { UserModel } = require("../models/user.model")
+const moment = require('moment-timezone');
 
 
 
@@ -90,8 +91,7 @@ const cancelBooking = async (req,res) =>{
 }
 
 
-
-
+    
 
 
 
@@ -195,7 +195,8 @@ const createBooking =  async(req,res) =>{
     try {
         
         const {code_service,branch_code,booking_time } =  req.body
-        
+        const time = moment.utc(booking_time).tz('Asia/Ho_Chi_Minh').format();
+
         const zaloID = req.zaloID;
 
         if (!zaloID) {
@@ -247,7 +248,7 @@ const createBooking =  async(req,res) =>{
             return
         }
 
-        const isDate = (booking_time) =>{
+        const isDate = (time) =>{
             const dateTime = new Date(booking_time);
             return !isNaN(dateTime.getTime());
     }
@@ -267,7 +268,7 @@ const createBooking =  async(req,res) =>{
             booking_code: booking_code,
             branch: branch_code,
             code_service: code_service,
-            booking_time: booking_time,
+            booking_time: time,
         })
   
         if(!book){ 
