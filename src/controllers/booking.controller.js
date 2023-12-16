@@ -3,6 +3,7 @@ const { branchModel } = require("../models/branch.model")
 const { ServiceModel } = require("../models/service.model")
 const { UserModel } = require("../models/user.model")
 const moment = require('moment-timezone');
+const { sendNotification } = require("../services/zalo.service");
 
 
 
@@ -269,7 +270,7 @@ const createBooking =  async(req,res) =>{
             branch: branch_code,
             code_service: code_service,
             booking_time: time,
-        })
+        })  
   
         if(!book){ 
             res.status(500).json({
@@ -278,6 +279,11 @@ const createBooking =  async(req,res) =>{
             })
             return 
         }
+
+
+        const send = await sendNotification(zaloID)
+
+
         return res.status(200).json({
             status: true,
             message: "Đặt lịch thành công",
