@@ -49,50 +49,49 @@ const getAllBooking =  async(req,res) =>{
 }
 
 
-
-const cancelBooking = async (req,res) =>{
+const cancelBooking = async (req, res) => {
     try {
-        const booking_code = req.params.booking_code  ||  req.body.booking_code  
-        if(!booking_code){
-            res.status(500).json({
-                status: false,
-                message: "Vui lòng nhập mã booking",
-            })
-            return
-        }
-        const update = {
-            booking_status: "cancelled",
-            update_date: Date.now
-        }
-
-        const cancel = await bookingModel.findOneAndUpdate(
-            {
-            booking_code: booking_code
-            }, update, {new: true}
-        )
-            
-        if(!cancel){
-            res.status(500).json({
-                status: false,
-                message: "Huỷ thất bại.  Đã xảy ra lỗi",
-            })
-        }
-        res.status(200).json({
-            status: false,
-            message: "Huỷ thành công. Bạn có thể đặt lịch mới.",
-        })
-
-
-    } catch (error) {
+      const booking_code = req.params.booking_code || req.body.booking_code;
+  
+      if (!booking_code) {
         res.status(500).json({
-            status: false,
-            message: "Server Err",
-        })
+          status: false,
+          message: "Vui lòng nhập mã booking",
+        });
+        return;
+      }
+  
+      const update = {
+        booking_status: "cancelled",
+        update_date: Date.now(), // Fix: Call Date.now() to get the current timestamp
+      };
+  
+      const cancel = await bookingModel.findOneAndUpdate(
+        { booking_code: booking_code },
+        update,
+        { new: true }
+      );
+  
+      if (!cancel) {
+        res.status(500).json({
+          status: false,
+          message: "Huỷ thất bại. Đã xảy ra lỗi",
+        });
+      }
+  
+      res.status(200).json({
+        status: true, //
+        message: "Huỷ thành công. Bạn có thể đặt lịch mới.",
+      });
+    } catch (error) {
+      console.error(error); 
+      res.status(500).json({
+        status: false,
+        message: "Server Err",
+      });
     }
-}
-
-
-    
+  };
+  
 
 
 
@@ -282,7 +281,9 @@ const createBooking =  async(req,res) =>{
 
 
         const send = await sendNotification(zaloID)
-
+        if(!send){
+            
+        }
 
         return res.status(200).json({
             status: true,
