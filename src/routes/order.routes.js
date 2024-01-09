@@ -1,5 +1,5 @@
 const express = require('express')
-const { createOrder } = require('../controllers/order.controller')
+const { createOrder, findOrderByID } = require('../controllers/order.controller')
 const { authMDW } = require('../middlewares/authMDW')
 
 const  orderRoutes  = express.Router()
@@ -48,7 +48,7 @@ const  orderRoutes  = express.Router()
 
 /**
  * @swagger
- * /service/get-all:
+ * /order/get:
  *   get:
  *     summary: Trả về tất cả dịch vụ
  *     tags: [order] 
@@ -65,9 +65,10 @@ const  orderRoutes  = express.Router()
 
 
 orderRoutes.post("/", authMDW ,createOrder)
+orderRoutes.post("/get", authMDW ,findOrderByID)
 
 
-
+    
 module.exports = {
     orderRoutes
 }
