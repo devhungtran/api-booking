@@ -10,9 +10,23 @@ const OrderShcheme  = new Schema({
         type: String,
         require: true
     },
+    order_fullname: {
+        type: String,
+        require: true
+    },
+    address: {
+        type: String,
+        require: true
+    },
+    numberphone: {
+        type: String,
+        require: true
+    },
+    
     product_code: {
         type: Array
     },
+    
     
     order_time: {
         type: Date,

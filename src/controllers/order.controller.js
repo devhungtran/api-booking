@@ -5,21 +5,14 @@ const Product = require('../models/product.model');
 
 const createOrder = async(req,res) =>{
     try {
-        const {product_id} = req.body
+        const {fullname,number_phone,address, product} = req.body
         
-        if(!product_id){
-            res.status(401).status({
-                status: true,
-                message: "product_id not existed !!!",
-             
-            })
-        }
+
         const zaloID = req.zaloID;
 
 
-        const check = await Product.findOne({
-            product_id: product_id
-        })
+
+
         if(!check){
             res.status(401).status({
                 status: true,
@@ -30,7 +23,9 @@ const createOrder = async(req,res) =>{
 
         const new_order = await orderModel.create({
             order_user: zaloID,
-            product_code: product_id
+            order_fullname: fullname,
+            address: address,
+            product_code: product
         })
 
         if(new_order){
