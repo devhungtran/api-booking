@@ -13,13 +13,7 @@ const createOrder = async(req,res) =>{
 
 
 
-        if(!check){
-            res.status(401).status({
-                status: true,
-                message: "product not existed !!!",
-     
-            })
-        }
+    
 
         const new_order = await orderModel.create({
             order_user: zaloID,
