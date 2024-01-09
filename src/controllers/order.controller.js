@@ -24,6 +24,7 @@ const createOrder = async(req,res) =>{
         const new_order = await orderModel.create({
             order_user: zaloID,
             order_fullname: fullname,
+            numberphone: number_phone,
             address: address,
             product_code: product
         })

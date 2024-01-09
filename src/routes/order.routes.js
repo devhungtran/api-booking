@@ -1,5 +1,6 @@
 const express = require('express')
 const { createOrder } = require('../controllers/order.controller')
+const { authMDW } = require('../middlewares/authMDW')
 
 const  orderRoutes  = express.Router()
 
@@ -63,7 +64,7 @@ const  orderRoutes  = express.Router()
  */
 
 
-orderRoutes.post("/", createOrder)
+orderRoutes.post("/", authMDW ,createOrder)
 
 
 
