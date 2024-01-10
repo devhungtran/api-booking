@@ -8,7 +8,7 @@ const { UserModel } = require('../models/user.model');
 const authMDW = async (req,res,next) =>{
     try {
         let authorization = req.headers['authorized']
-
+        
         if(!authorization){
             res.status(500).json({
                 status: false,
