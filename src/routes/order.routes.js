@@ -65,7 +65,7 @@ const  orderRoutes  = express.Router()
 
 
 orderRoutes.post("/", authMDW ,createOrder)
-orderRoutes.post("/get", authMDW ,findOrderByID)
+orderRoutes.get("/get", authMDW ,findOrderByID)
 
 
     
